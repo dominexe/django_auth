@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} Факультеты {% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+    <h1>Факультеты</h1>
+    {% if is_methodist %}
+    <a class="btn btn-primary" href="/departments/add/">Добавить факультет</a>
+    {% endif %}
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            {% if is_methodist %}<th>Действия</th>{% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for department in departments %}
+        <tr>
+            <td>{{ department.id }}</td>
+            <td>{{ department.name }}</td>
+            {% if is_methodist %}
+            <td>
+                <a class="btn btn-sm btn-warning" href="/departments/{{ department.id }}/edit/">Изменить</a>
+                <a class="btn btn-sm btn-danger" href="/departments/{{ department.id }}/delete/">Удалить</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

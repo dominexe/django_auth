@@ -16,6 +16,18 @@ class Course(models.Model):
     )
     def __str__(self):
         return self.title
+
+class AcademicGroup(models.Model):
+    name = models.CharField(max_length=50)
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.CASCADE,
+        related_name='groups'
+    )
+
+    def __str__(self):
+        return self.name
+
 class StudentProfile(models.Model):
     user = models.OneToOneField(
         User,
@@ -29,10 +41,18 @@ class StudentProfile(models.Model):
         blank=True,
         related_name='students'
     )
+    academic_group = models.ForeignKey(
+        AcademicGroup,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='students'
+    )
     courses = models.ManyToManyField(
         Course,
         blank=True,
         related_name='students'
     )
+
     def __str__(self):
         return self.user.username

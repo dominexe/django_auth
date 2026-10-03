@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Department, StudentProfile
+from .models import AcademicGroup, Course, Department, StudentProfile
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
@@ -10,6 +10,11 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'department')
     list_filter = ('department',)
     search_fields = ('title',)
+@admin.register(AcademicGroup)
+class AcademicGroupAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'department')
+    list_filter = ('department',)
+    search_fields = ('name',)
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'department')

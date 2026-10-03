@@ -22,14 +22,10 @@
                 DjangoApp
             </a>
             <div class="navbar-nav me-auto">
-                <a class="nav-link"
-                   href="/profile/">
-                    Профиль
-                </a>
-                <a class="nav-link"
-                   href="/courses/">
-                    Курсы
-                </a>
+                <a class="nav-link" href="/profile/">Профиль</a>
+                <a class="nav-link" href="/departments/">Факультеты</a>
+                <a class="nav-link" href="/groups/">Группы</a>
+                <a class="nav-link" href="/courses/">Курсы</a>
             </div>
             {% if user.is_authenticated %}
                 <span class="navbar-text me-3">

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} Группы {% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+    <h1>Учебные группы</h1>
+    {% if is_methodist %}
+    <a class="btn btn-primary" href="/groups/add/">Добавить группу</a>
+    {% endif %}
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th><th>Название</th><th>Факультет</th>
+            {% if is_methodist %}<th>Действия</th>{% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for group in groups %}
+        <tr>
+            <td>{{ group.id }}</td>
+            <td>{{ group.name }}</td>
+            <td>{{ group.department.name }}</td>
+            {% if is_methodist %}
+            <td>
+                <a class="btn btn-sm btn-warning" href="/groups/{{ group.id }}/edit/">Изменить</a>
+                <a class="btn btn-sm btn-danger" href="/groups/{{ group.id }}/delete/">Удалить</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
