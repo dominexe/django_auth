@@ -1,31 +1,44 @@
 {% extends 'base.html' %}
-{% block title %}
-Профиль
-{% endblock %}
+
+{% block title %}Профиль{% endblock %}
+
 {% block content %}
-<div class="user-info">
-    <h1>Профиль пользователя</h1>
-    <p>
-        Имя пользователя:
-        <strong>{{ user.username }}</strong></p>
-    <p>
-        Статус:
-        {% if user.is_superuser %}
-            <span class="badge text-bg-danger">
-                Администратор
-            </span>
-        {% else %}
-            <span class="badge text-bg-primary">
-                Пользователь
-            </span>
-        {% endif %}
-        {% if is_methodist %}
-            <span class="badge text-bg-success">Методист</span>
-        {% endif %}
-    </p>
-    <a class="btn btn-primary"
-       href="/courses/">
-        Посмотреть курсы
-    </a>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Профиль пользователя</h3>
+            </div>
+
+            <div class="card-body text-center">
+                <span class="avatar avatar-xl bg-white">
+                    {{ user.username|slice:":2"|upper }}
+                </span>
+
+                <h2 class="mb-1">{{ user.username }}</h2>
+
+                <div class="mb-3">
+                    {% if user.is_superuser %}
+                        <span class="badge bg-red text-white">
+                            Администратор
+                        </span>
+                    {% elif is_methodist %}
+                        <span class="badge bg-green text-white">
+                            Методист
+                        </span>
+                    {% else %}
+                        <span class="badge bg-blue text-white">
+                            Пользователь
+                        </span>
+                    {% endif %}
+                </div>
+
+                <a href="{% url 'course_list' %}"
+                   class="btn btn-primary w-100">
+                    Перейти к курсам
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

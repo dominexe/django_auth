@@ -109,14 +109,6 @@ def academic_group_delete(request, pk):
     return render(request, 'object_confirm_delete.html', {'object': group, 'title': 'Удаление учебной группы'})
 
 @login_required
-def course_list(request):
-    courses = Course.objects.all()
-    return render(request, 'course_list.html', {
-        'courses': courses,
-        'is_methodist': is_methodist(request.user),
-    })
-
-@login_required
 @user_passes_test(is_methodist)
 def course_create(request):
     if request.method == 'POST':

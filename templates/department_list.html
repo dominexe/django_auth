@@ -1,33 +1,46 @@
 {% extends 'base.html' %}
-{% block title %} Факультеты {% endblock %}
+{% block title %}Факультеты{% endblock %}
 {% block content %}
-<div class="d-flex justify-content-between mb-3">
-    <h1>Факультеты</h1>
-    {% if is_methodist %}
-    <a class="btn btn-primary" href="/departments/add/">Добавить факультет</a>
-    {% endif %}
-</div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Название</th>
-            {% if is_methodist %}<th>Действия</th>{% endif %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for department in departments %}
-        <tr>
-            <td>{{ department.id }}</td>
-            <td>{{ department.name }}</td>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Список факультетов</h3>
+        <div class="card-actions">
             {% if is_methodist %}
-            <td>
-                <a class="btn btn-sm btn-warning" href="/departments/{{ department.id }}/edit/">Изменить</a>
-                <a class="btn btn-sm btn-danger" href="/departments/{{ department.id }}/delete/">Удалить</a>
-            </td>
+            <a href="/departments/add/" class="btn btn-primary btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                Добавить факультет
+            </a>
             {% endif %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </div>
+    </div>
+    <div class="table-responsive"> {# Адаптивность: на мобильных таблица будет скроллиться горизонтально #}
+        <table class="table table-vcenter table-striped card-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    {% if is_methodist %}<th class="w-1">Действия</th>{% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for department in departments %}
+                <tr>
+                    <td>{{ department.id }}</td>
+                    <td>{{ department.name }}</td>
+                    {% if is_methodist %}
+                    <td>
+                        <div class="btn-list flex-nowrap">
+                            <a href="/departments/{{ department.id }}/edit/" class="btn btn-sm btn-warning">Изменить</a>
+                            <a href="/departments/{{ department.id }}/delete/" class="btn btn-sm btn-danger">Удалить</a>
+                        </div>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="text-center text-muted">Записей пока нет.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
