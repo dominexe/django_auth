@@ -1,0 +1,19 @@
+<form method="get" class="card mb-3">
+    <div class="card-body d-flex flex-wrap align-items-end gap-3">
+        <div>
+            <label for="department-filter" class="form-label">Факультет</label>
+            <select name="department" id="department-filter" class="form-select">
+                <option value="">Все факультеты</option>
+                {% for department in departments %}
+                <option value="{{ department.pk }}"
+                    {% if selected_department.pk == department.pk %}selected{% endif %}>
+                    {{ department.name }} (#{{ department.pk }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Применить</button>
+        <a href="{{ request.path }}" class="btn">Сбросить</a>
+        <button type="button" class="btn" id="dashboard-refresh">Обновить</button>
+    </div>
+</form>

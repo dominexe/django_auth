@@ -1,0 +1,41 @@
+<article class="card h-100">
+    <div class="card-body">
+        <h2 class="h3">{{ chart.title }}</h2>
+        {% if chart.maximum %}
+        <p class="small text-secondary">Шкала: от 0 до {{ chart.maximum }}. Единица измерения: количество.</p>
+        {% else %}
+        <p class="text-secondary">В этой выборке пока нет ненулевых значений.</p>
+        {% endif %}
+        <div class="analytics-chart">
+            {% for row in chart.rows %}
+            <div class="analytics-row">
+                <div class="analytics-row-heading">
+                    <span>{{ row.label }}</span>
+                    <strong>{{ row.value }}</strong>
+                </div>
+                <div class="analytics-track" aria-hidden="true">
+                    <div class="analytics-bar" style="width: {{ row.width }}%"></div>
+                </div>
+            </div>
+            {% empty %}
+            <p>Нет объектов для отображения. Добавьте их через сайт или админку.</p>
+            {% endfor %}
+        </div>
+        <details class="mt-3">
+            <summary>Показать таблицу значений</summary>
+            <div class="table-responsive mt-2">
+                <table class="table table-vcenter">
+                    <caption>{{ chart.title }}: данные диаграммы</caption>
+                    <thead><tr><th scope="col">Объект / категория</th><th scope="col">Количество</th></tr></thead>
+                    <tbody>
+                    {% for row in chart.rows %}
+                        <tr><th scope="row">{{ row.label }}</th><td>{{ row.value }}</td></tr>
+                    {% empty %}
+                        <tr><td colspan="2">Нет данных</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </details>
+    </div>
+</article>

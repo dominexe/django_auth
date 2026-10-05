@@ -1,0 +1,17 @@
+.analytics { padding-bottom: 2rem; }
+.analytics .nav-pills .nav-link.active { background-color: #650909; color: white; }
+.analytics .nav-link { color: #650909; }
+.analytics-value { font-size: 2rem; font-weight: 700; color: #650909; }
+.analytics-chart { max-height: 26rem; overflow-y: auto; padding-right: .5rem; }
+.analytics-row { margin-bottom: 1rem; }
+.analytics-row-heading { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: .35rem; }
+.analytics-row-heading span { overflow-wrap: anywhere; }
+.analytics-track { height: 1.1rem; background: #f3e5e5; border-radius: .3rem; overflow: hidden; }
+.analytics-bar { height: 100%; background: #650909; border-radius: .3rem; }
+.analytics summary { cursor: pointer; color: #650909; }
+.analytics .form-select { max-width: 100%; }
+.analytics table th { white-space: normal; }
+@media print {
+    .analytics form, .analytics nav { display: none; }
+    .analytics-chart { max-height: none; overflow: visible; }
+}

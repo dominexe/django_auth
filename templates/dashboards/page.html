@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} — Аналитика{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboards.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="analytics" aria-labelledby="dashboard-title">
+    <div class="mb-3">
+        <div class="text-secondary">Аналитика учебного портала</div>
+        <h1 id="dashboard-title">{{ title }}</h1>
+        <p>{{ subtitle }}</p>
+    </div>
+
+    <nav class="nav nav-pills mb-3" aria-label="Разделы аналитики">
+        {% for tab in tabs %}
+        <a class="nav-link {% if tab.active %}active{% endif %}"
+           href="{{ tab.url }}" {% if tab.active %}aria-current="page"{% endif %}>
+            {{ tab.title }}
+        </a>
+        {% endfor %}
+    </nav>
+
+    {% include 'dashboards/components/filters.html' %}
+
+    <div class="row g-3 mb-3">
+        {% for label, value in cards %}
+            {% include 'dashboards/components/stat_card.html' with label=label value=value only %}
+        {% endfor %}
+    </div>
+
+    <div class="row g-3 mb-3">
+        {% for chart in charts %}
+        <div class="col-12 col-lg-6">
+            {% include 'dashboards/components/chart.html' with chart=chart only %}
+        </div>
+        {% endfor %}
+    </div>
+
+
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/dashboards.js' %}" defer></script>
+{% endblock %}
