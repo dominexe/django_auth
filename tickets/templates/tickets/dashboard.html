@@ -1,0 +1,153 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Управление заявками</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0/dist/css/tabler.min.css"
+    >
+</head>
+
+<body>
+<div class="page">
+    <div class="page-wrapper">
+        <main
+            id="tickets-app"
+            class="container-xl py-4"
+            data-categories-url="{% url 'tickets:category-list' %}"
+            data-tickets-url="{% url 'tickets:ticket-list' %}"
+        >
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="mb-1">Управление заявками</h1>
+                    <div class="text-secondary">
+                        Пользователь: {{ request.user.get_username }}
+                    </div>
+                </div>
+
+                <a href="/" class="btn btn-outline-secondary">
+                    На главную
+                </a>
+            </div>
+
+            <div
+                id="message"
+                role="status"
+                aria-live="polite"
+                hidden
+            ></div>
+
+            <section class="card mb-4">
+                <div class="card-header">
+                    <h2 id="form-heading" class="card-title">
+                        Новая заявка
+                    </h2>
+                </div>
+
+                <div class="card-body">
+                    <form id="ticket-form">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">
+                                Название
+                            </label>
+
+                            <input
+                                id="title"
+                                class="form-control"
+                                type="text"
+                                maxlength="200"
+                                placeholder="Например: Не работает принтер"
+                                required
+                            >
+
+                            <div class="form-hint">
+                                Не менее 5 символов.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">
+                                Описание
+                            </label>
+
+                            <textarea
+                                id="description"
+                                class="form-control"
+                                rows="3"
+                                placeholder="Опишите проблему подробнее"
+                            ></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category" class="form-label">
+                                Категория
+                            </label>
+
+                            <select
+                                id="category"
+                                class="form-select"
+                                required
+                            ></select>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button
+                                id="save-button"
+                                type="submit"
+                                class="btn btn-primary"
+                                disabled
+                            >
+                                Создать заявку
+                            </button>
+
+                            <button
+                                id="cancel-button"
+                                type="button"
+                                class="btn btn-outline-secondary"
+                                hidden
+                            >
+                                Отменить редактирование
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Мои заявки</h2>
+                </div>
+
+                <div class="card-body">
+                    <label for="status-filter" class="form-label">
+                        Фильтр по статусу
+                    </label>
+
+                    <select id="status-filter" class="form-select mb-3">
+                        <option value="">Все статусы</option>
+                        <option value="new">Новые</option>
+                        <option value="progress">В работе</option>
+                        <option value="done">Выполненные</option>
+                    </select>
+
+                    <div id="loading" class="text-secondary mb-3" hidden>
+                        Загрузка данных...
+                    </div>
+
+                    <div id="tickets-list"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<script src="{% static 'tickets/app.js' %}"></script>
+</body>
+</html>
